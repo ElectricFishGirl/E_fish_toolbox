@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import json
 
-RECORDING_PATH = '../Recordings/'
+RECORDING_PATH = '../../Recordings/8bits/'
 SAVE_PATH = 'processed_data/'
 
 MANIFEST_FILE = 'manifest.json'
