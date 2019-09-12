@@ -1,5 +1,5 @@
 import helpers
-from tqdm import tqdm
+#from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
@@ -9,10 +9,12 @@ CVs = []
 average_frequencies = []
 file_names = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-Analysis_filename = 'Analysis_t11.csv'
+#Analysis_filename = 'Analysis_t11.csv'
 
+fish = fish_names[0]
 for fish in tqdm(fish_names):
     npy_files = helpers.get_high_frequency_files(fish, helpers.SAVE_PATH)
+    file = npy_files[0]
     for file in tqdm(npy_files):
         frequency = helpers.load_npy(file)
         average_frequency = np.mean(frequency)
