@@ -4,15 +4,19 @@ from os.path import join, split, isdir
 import numpy as np
 import matplotlib.pyplot as plt
 import json
+import scipy.io as sio
+from scipy.fftpack import fft
 
-RECORDING_PATH = '../../Recordings/8bits/'
-SAVE_PATH = 'processed_data/'
+RECORDING_PATH8 = '../../Recordings/8bits/'
+RECORDING_PATH16 = '../../Recordings/16bits/'
+
+SAVE_PATH = '../processed_data/'
 
 MANIFEST_FILE = 'manifest.json'
 
 NPY_FREQUENCY = 41666666.666
 LONG_FREQUENCY = 10416666.666
-
+MAT_FREQUENCY = 62500002
 
 def get_all_fish(path):
     name_paths = glob(join(path, "*"))
@@ -22,15 +26,26 @@ def get_all_fish(path):
 def get_high_frequency_files(fish_name, path):
     return glob(join(path, fish_name, "*.npy"))
 
+def get_mat_files(fish_name, path):
+    return glob(join(path, fish_name, "*.mat"))
 
 def load_npy(path):
     return np.load(path)
+
+def load_mat(path):
+    mat_file = sio.loadmat(path)
+    weird_data = mat_file['A']
+    stripper = []
+    for i in range(len(weird_data)):
+        stripper.append(weird_data[i][0])
+    return stripper - np.mean(stripper)
 
 
 def create_time(file_length, style='NPY'):
     switcher = {
         'NPY': 1. / NPY_FREQUENCY,
-        'LONG': 1. / LONG_FREQUENCY
+        'LONG': 1. / LONG_FREQUENCY,
+        'MAT' : 1./ MAT_FREQUENCY
     }
 
     dt = switcher[style]
