@@ -3,7 +3,7 @@ from lewisfunctions.frequency import calculate_frequency
 #from tqdm import tqdm
 import numpy as np
 
-fish_names = helpers.get_all_fish(helpers.RECORDING_PATH)
+fish_names = helpers.get_all_fish(helpers.RECORDING_PATH8)
 indexes = []
 for fish in tqdm(fish_names):
     npy_files = helpers.get_high_frequency_files(fish, helpers.RECORDING_PATH)
