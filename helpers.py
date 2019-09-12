@@ -38,7 +38,8 @@ def load_mat(path):
     stripper = []
     for i in range(len(weird_data)):
         stripper.append(weird_data[i][0])
-    return stripper - np.mean(stripper)
+    data = stripper - np.mean(stripper)
+    return data
 
 
 def create_time(file_length, style='NPY'):
