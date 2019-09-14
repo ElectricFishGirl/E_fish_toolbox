@@ -28,7 +28,8 @@ for fish in (fish_names):
             time_array = np.arange(0, time-1/sampling_frequency, 1 / sampling_frequency)  # IMPLEMENT IN HELPERS
             threshold = max(data)/2
             fest = calculate_frequency(EOD[::20], sampling_frequency/20, method='spectral')
-            frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=fest[0], crossing_threshold=threshold/2, method='median',ascending=True)
+            frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=fest[0],
+                                              crossing_threshold=threshold/2, method='median',ascending=True)
             cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
 
             file_name = helpers.path_to_name(file)

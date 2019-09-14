@@ -13,7 +13,7 @@ import os
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16) # CHANGE TO RECORDING_PATH8 for 8 bits files
 indexes = []
 sub = 100
-fish = fish_names[2]
+fish = fish_names[0]
 for fish in (fish_names):
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
     file = mat_files[2]

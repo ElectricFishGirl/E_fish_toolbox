@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
-fish = fish_names[0]
+#fish = fish_names[0]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[0]
+    #file = mat_files[2]
     for file in mat_files:
         data = helpers.load_mat(file)
         data = np.array(data, dtype='int')
@@ -24,6 +24,7 @@ for fish in fish_names:
         frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate[0],
                                           crossing_threshold=threshold/2, method='median', ascending=True)
         cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
+        print(cv)
 
         file_name = helpers.path_to_name(file)
         helpers.save_results(frequencies, fish, file_name)
