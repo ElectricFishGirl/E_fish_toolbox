@@ -14,13 +14,13 @@ for fish in (fish_names):
     for file in mat_files:
         data = helpers.load_mat(file)
         sampling_frequency = helpers.MAT_FREQUENCY
-        step = 10
+        step = 1
         step_size = np.size(data) / step
         i = 0
         #EOD = data
         for i in range(0, int(step)):
             sub_data = data[int(i * step_size): int((i + 1) * step_size)]
-            sub_sampling = 1000
+            sub_sampling = 1
             EOD = sub_data[::sub_sampling]
             sampling_frequency = helpers.MAT_FREQUENCY / sub_sampling
             t_max = int(len(data) / helpers.MAT_FREQUENCY)
