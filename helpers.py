@@ -74,6 +74,8 @@ def save_results(frequencies, fish_name, file_name):
 
 
 def save_figure(path, plot_type, fish_name):
+    save_path = join(SAVE_PATH, fish_name)
+    __make_dir_if_not_exist__(save_path)
     plt.tight_layout()
     plt.savefig(join(path, plot_type + "_" + fish_name + ".jpg"))
     #plt.close()
