@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import pandas as pd
+from os.path import join
 
 CVs = []
 average_frequencies = []
@@ -12,10 +13,10 @@ fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #Analysis_filename = 'Analysis_t11.csv'
 
 fish = fish_names[0]
-for fish in tqdm(fish_names):
+for fish in fish_names:
     npy_files = helpers.get_high_frequency_files(fish, helpers.SAVE_PATH)
     file = npy_files[0]
-    for file in tqdm(npy_files):
+    for file in npy_files:
         frequency = helpers.load_npy(file)
         average_frequency = np.mean(frequency)
         period = 1. / frequency
@@ -27,8 +28,8 @@ for fish in tqdm(fish_names):
         file_names.append(file_name)
         average_frequencies.append(average_frequency)
         CVs.append(cv)
-        analysis = pd.DataFrame({'Fish_name': file_names, 'Average Frequency': average_frequencies, 'CV': CVs})
-        analysis.to_csv(Analysis_filename, index=False)
+        #analysis = pd.DataFrame({'Fish_name': file_names, 'Average Frequency': average_frequencies, 'CV': CVs})
+        #analysis.to_csv(Analysis_filename, index=False)
 
         # fig = plt.figure("Analysis")
         # y = frequency - np.mean(frequency)
@@ -58,47 +59,47 @@ for fish in tqdm(fish_names):
         # ax4.set_title('Frequency with time')
         #
         #
-        # helpers.save_figure('processed_data/All fish/All/', 'Analysis for ', file_name)
+        # helpers.save_figure(helpers.file_to_path(file), 'Analysis for ', fish,  file_name)
         # plt.close()
-        #
-        #
-        # plt.figure('Frequency with time')
-        # plt.plot(cycle_time, frequency, '.')
-        # plt.ylabel('Frequency [Hz]')
-        # plt.xlabel('Time [s]')
-        # plt.title('Frequency variation in time for ' + file_name + ' CV = ' + str(cv))
-        # helpers.save_figure(helpers.file_to_path(file), 'Frequency in time for ', file_name)
-        # helpers.save_figure('processed_data/All fish/Frequency tracking/', 'Frequency in time for ', file_name)
-        # plt.close()
-        #
-        # plt.figure('Histogram of frequencies')
-        # plt.hist(frequency, bins=40)
-        # plt.xlabel('Frequency [Hz]')
-        # plt.ylabel('instances')
-        # plt.title('Histogram of frequencies for ' + file_name + ' CV = ' + str(cv))
-        # helpers.save_figure(helpers.file_to_path(file), 'Histogram of frequencies ', file_name)  #saves each fish in its own folder
-        # helpers.save_figure('processed_data/All fish/Histograms', 'Histogram of frequencies ', file_name)
-        # plt.close()
+
+
+        plt.figure('Frequency with time')
+        plt.plot(cycle_time, frequency, '.')
+        plt.ylabel('Frequency [Hz]')
+        plt.xlabel('Time [s]')
+        plt.title('Frequency variation in time for ' + file_name + ' CV = ' + str(cv))
+        helpers.save_figure(helpers.file_to_path(file), 'Frequency in time for ', fish, file_name)
+        #helpers.save_figure('processed_data/All fish/Frequency tracking/', 'Frequency in time for ', file_name)
+        plt.close()
+
+        plt.figure('Histogram of frequencies')
+        plt.hist(frequency, bins=40)
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('instances')
+        plt.title('Histogram of frequencies for ' + file_name + ' CV = ' + str(cv))
+        helpers.save_figure(helpers.file_to_path(file), 'Histogram of frequencies ', fish, file_name)  #saves each fish in its own folder
+        #helpers.save_figure('processed_data/All fish/Histograms', 'Histogram of frequencies ', file_name)
+        plt.close()
         #
         # plt.figure('Histogram of periods')
         # plt.hist(period_ms, bins=40)
         # plt.xlabel('Periods [ms]')
         # plt.ylabel('instances')
         # plt.title('Histogram of periods for ' + file_name + ' CV = ' + str(cv))
-        # helpers.save_figure(helpers.file_to_path(file), 'Histogram of periods ', file_name)  #saves each fish in its own folder
-        # helpers.save_figure('processed_data/All fish/Histograms', 'Histogram of periods ', file_name)
+        # helpers.save_figure(helpers.file_to_path(file), 'Histogram of periods ', fish, file_name)  #saves each fish in its own folder
+        # #helpers.save_figure('processed_data/All fish/Histograms', 'Histogram of periods ', file_name)
         # plt.close()
-
-        plt.figure('Correlation')
-        color = np.sort(shifted_frequency)
-        plt.scatter(shifted_frequency, frequency, c=color, marker='.')
-        plt.ylabel('Frequency [Hz]')
-        plt.xlabel('Following frequency [Hz]')
-        plt.title('Correlation for ' + file_name + ' CV = ' + str(cv))
-        plt.axis('equal')
-        helpers.save_figure(helpers.file_to_path(file), 'Correlation for ', file_name)
-        helpers.save_figure('processed_data/All fish/Correlations/', 'Correlation for ', file_name)
-        plt.close()
+        #
+        # plt.figure('Correlation')
+        # color = np.sort(shifted_frequency)
+        # plt.scatter(shifted_frequency, frequency, c=color, marker='.')
+        # plt.ylabel('Frequency [Hz]')
+        # plt.xlabel('Following frequency [Hz]')
+        # plt.title('Correlation for ' + file_name + ' CV = ' + str(cv))
+        # plt.axis('equal')
+        # helpers.save_figure(helpers.file_to_path(file), 'Correlation for ', fish, file_name)
+        # #helpers.save_figure('processed_data/All fish/Correlations/', 'Correlation for ', file_name)
+        # plt.close()
 
 #
 # Analysis_t8 = pd.read_csv('Analysis_t8.csv')

@@ -36,9 +36,9 @@ for fish in (fish_names):
         plt.grid()
         plt.ylabel('Amplitude')
         plt.xlabel('Frequency ')
-        plt.xlim(0,6000)
+        plt.xlim(0,3000)
         plt.title('FFT ' + file_name )
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'FFT 2', fish)
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'FFT 2', fish, file_name)
     plt.close()
 
 
