@@ -16,7 +16,7 @@ MANIFEST_FILE = 'manifest.json'
 
 NPY_FREQUENCY = 41666666.666
 LONG_FREQUENCY = 10416666.666
-MAT_FREQUENCY = 62500002
+MAT_FREQUENCY = 62500002.0
 
 def get_all_fish(path):
     name_paths = glob(join(path, "*"))
