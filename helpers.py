@@ -88,3 +88,10 @@ def load_manifest():
 
     return manifest
 
+def compute_fft(data, subsampling, samp_freq ):
+    y = data[::subsampling]
+    yf = fft(y)
+    xf = np.linspace(0.0, 1.0 / (2.0 * (subsampling / samp_freq)), int(len(y) / 2))
+    power = 2.0 / len(y) * np.abs(yf[0:len(y) // 2])
+
+    return  xf , power

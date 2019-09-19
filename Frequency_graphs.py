@@ -20,7 +20,7 @@ for fish in fish_names:
     file = npy_files[j]
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
     raw_file = mat_files[j]
-    for numb in range(6,15):
+    for numb in range(4,12):
         raw_data = helpers.load_mat(mat_files[numb])
         data = raw_data - np.mean(raw_data)
         file_name = helpers.path_to_name(mat_files[numb])
@@ -32,16 +32,11 @@ for fish in fish_names:
         time_array = np.arange(0, t_max-1/helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
         cycle_time = np.cumsum(1./frequency)
 
-        #FFT calculations
-        y = data[::50]
-        yf = fft(y)
-        xf = np.linspace(0.0, 1.0 / (2.0 * (50 / helpers.MAT_FREQUENCY)), int(len(y) / 2))
-        power = 2.0 / len(y) * np.abs(yf[0:len(y)//2])
+        [xf, power] = helpers.compute_fft(data, 50, helpers.MAT_FREQUENCY)
 
         fig = plt.figure('Explore V1 ' + file_name )
         ax1 = fig.add_subplot(221)
         ax1.plot(time_array[::50] , data[::50])
-        #ax1.grid(True)
         ax1.set_title('Full data')
 
         ax2 = fig.add_subplot(222)
@@ -50,7 +45,7 @@ for fish in fish_names:
         ax2.set_title('Waveform')
 
         ax3 = fig.add_subplot(223)
-        ax3.plot(xf,  power / 10)
+        ax3.plot(xf,  power/np.max(power))
         ax3.set_title('FFT')
         ax3.set_ylabel('Amplitude')
         ax3.set_xlabel('Frequency ')
@@ -58,10 +53,9 @@ for fish in fish_names:
 
         ax4 = fig.add_subplot(224)
         ax4.plot(cycle_time, frequency, '.')
-        ax4.set_title('Frequency with time')
+        ax4.set_title('Frequency with time' + ' CV = ' + str(cv))
 
-
-        helpers.save_figure(helpers.file_to_path(file), 'Explore V1 for ', fish,  file_name)
+        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1 for ', fish,  file_name)
         plt.close()
 
 
