@@ -20,7 +20,7 @@ for fish in fish_names:
     file = npy_files[j]
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
     raw_file = mat_files[j]
-    for numb in range(0,5):
+    for numb in range(6,15):
         raw_data = helpers.load_mat(mat_files[numb])
         data = raw_data - np.mean(raw_data)
         file_name = helpers.path_to_name(mat_files[numb])
@@ -45,7 +45,7 @@ for fish in fish_names:
         ax1.set_title('Full data')
 
         ax2 = fig.add_subplot(222)
-        ax2.plot(time_array[0:375000] , data[0:375000]) # shows 5 cycles
+        ax2.plot(time_array[0:675000] , data[0:675000]) # shows 5 cycles
         ax2.axhline(threshold, color='r')
         ax2.set_title('Waveform')
 
