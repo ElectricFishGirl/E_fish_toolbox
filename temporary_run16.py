@@ -10,7 +10,7 @@ indexes = []
 fish = fish_names[0]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[7]
+    file = mat_files[0]
     for file in mat_files[3:15]:
         data = helpers.load_mat(file)
         #data = np.array(data, dtype='int')
