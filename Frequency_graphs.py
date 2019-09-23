@@ -55,8 +55,46 @@ for fish in fish_names:
         ax4.plot(cycle_time, frequency, '.')
         ax4.set_title('Frequency with time' + ' CV = ' + str(cv))
 
-        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1 for ', fish,  file_name)
+        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1.1 for ', fish,  file_name)
         plt.close()
+
+        for numb in range(0, 14):
+
+            file_name = helpers.path_to_name(mat_files[numb])
+            frequency = helpers.load_npy(npy_files[numb])
+            cv = '{:.2e}'.format(np.std(frequency) / np.mean(frequency))
+
+            t_max = len(data) / helpers.MAT_FREQUENCY
+            time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
+            cycle_time = np.cumsum(1. / frequency)
+
+
+            fig = plt.figure('Analysis V1 ' + file_name)
+            ax1 = fig.add_subplot(221)
+            ax1.hist(frequency, bins = 60)
+            ax1.set_title('Histogram')
+
+            ax2 = fig.add_subplot(222)
+            m13 = frequency
+            m12 = np.roll(m13, 1)  # shift by one
+            color = np.sort(m13)
+            ax2.scatter(m13, m12, c=color, marker='.')
+            ax2.set_title('Shifted frequency')
+            ax2.axis('equal')
+
+            ax3 = fig.add_subplot(223)
+            ax3.acorr(frequency, usevlines=True, maxlags=50, normed=True, lw=2)
+            ax3.grid(True)
+            ax3.axhline(0, color='black', lw=2)
+            ax3.set_title('Correlation')
+
+
+            ax4 = fig.add_subplot(224)
+            ax4.plot(cycle_time, frequency, '.')
+            ax4.set_title('Frequency with time' + ' CV = ' + str(cv))
+
+            helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Analysis V1.1 for ', fish, file_name)
+            plt.close()
 
 
         # sampling_frequency = helpers.MAT_FREQUENCY
