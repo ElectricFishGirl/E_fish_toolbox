@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
-fish = fish_names[0]
+fish = fish_names[2]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[7]
-    for file in mat_files[3:15]:
+    file = mat_files[2]
+    for file in mat_files[3:4]:
         data = helpers.load_mat(file)
         #data = np.array(data, dtype='int')
         EOD = data - np.mean(data)
