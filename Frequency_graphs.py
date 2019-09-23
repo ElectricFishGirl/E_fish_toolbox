@@ -13,14 +13,14 @@ file_names = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #Analysis_filename = 'Analysis_t11.csv'
 
-fish = fish_names[0]
+fish = fish_names[2]
 for fish in fish_names:
     j = 0
     npy_files = helpers.get_high_frequency_files(fish, helpers.SAVE_PATH)
     file = npy_files[j]
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
     raw_file = mat_files[j]
-    for numb in range(4,12):
+    for numb in range(0,5):
         raw_data = helpers.load_mat(mat_files[numb])
         data = raw_data - np.mean(raw_data)
         file_name = helpers.path_to_name(mat_files[numb])
@@ -58,7 +58,7 @@ for fish in fish_names:
         helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1.1 for ', fish,  file_name)
         plt.close()
 
-        for numb in range(0, 14):
+        for numb in range(0, 5):
 
             file_name = helpers.path_to_name(mat_files[numb])
             frequency = helpers.load_npy(npy_files[numb])
