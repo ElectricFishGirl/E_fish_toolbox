@@ -77,7 +77,7 @@ def save_figure(path, plot_type, fish_name, filename):
     save_path = join(SAVE_PATH, fish_name)
     __make_dir_if_not_exist__(save_path)
     plt.tight_layout()
-    plt.savefig(join(path, plot_type + "_" + filename + ".jpg"))
+    plt.savefig(join(path, plot_type + "_" + filename + ".jpg"), dpi=600)
     #plt.close()
 
 

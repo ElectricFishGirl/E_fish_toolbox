@@ -20,7 +20,7 @@ for fish in (fish_names):
     shift = 0
    # listy = [0,11,13,14,15]
    # listy = [3,17,18,1,2]
-    for file in mat_files[6:10]:
+    for file in mat_files[1:8]:
         data = helpers.load_mat(file)
         data = data - np.mean(data)
         file_name = helpers.path_to_name(file)
@@ -34,7 +34,7 @@ for fish in (fish_names):
         # power = 2.0/len(xf) * np.abs(yf[0:int(len(xf))])
         [xf, power] = helpers.compute_fft(data, 50, helpers.MAT_FREQUENCY)
         plt.plot(xf, shift+power/np.max(power))
-        shift = shift + 1
+        shift = shift + 1.2
         plt.grid()
         plt.ylabel('Amplitude')
         plt.xlabel('Frequency ')
