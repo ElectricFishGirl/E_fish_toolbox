@@ -10,10 +10,11 @@ indexes = []
 fish = fish_names[2]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[2]
+    file = mat_files[1]
     for file in mat_files[3:4]:
-        data = helpers.load_mat(file)
-        #data = np.array(data, dtype='int')
+        raw_data = helpers.load_mat(file)
+        data = np.array(raw_data)
+        data = data[np.isfinite(data)]
         EOD = data - np.mean(data)
         sampling_frequency = helpers.MAT_FREQUENCY
         t_max = len(data) / helpers.MAT_FREQUENCY

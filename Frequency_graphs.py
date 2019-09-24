@@ -15,33 +15,35 @@ fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 
 fish = fish_names[2]
 for fish in fish_names:
-    j = 0
+    j = 1
     npy_files = helpers.get_high_frequency_files(fish, helpers.SAVE_PATH)
     file = npy_files[j]
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
     raw_file = mat_files[j]
     for numb in range(0,5):
         raw_data = helpers.load_mat(mat_files[numb])
-        data = raw_data - np.mean(raw_data)
+        data = np.array(raw_data)
+        data = data[np.isfinite(data)]
+        EOD = data - np.mean(data)
         file_name = helpers.path_to_name(mat_files[numb])
         frequency = helpers.load_npy(npy_files[numb])
-        cv = '{:.2e}'.format(np.std(frequency)/np.mean(frequency))
-        threshold = max(data)/2
+        cv = '{:.2e}'.format(np.std(frequency) / np.mean(frequency))
+        threshold = max(EOD) / 2
 
-        t_max = len(data) / helpers.MAT_FREQUENCY
-        time_array = np.arange(0, t_max-1/helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
-        cycle_time = np.cumsum(1./frequency)
+        t_max = len(EOD) / helpers.MAT_FREQUENCY
+        time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
+        cycle_time = np.cumsum(1. / frequency)
 
-        [xf, power] = helpers.compute_fft(data, 50, helpers.MAT_FREQUENCY)
+        [xf, power] = helpers.compute_fft(EOD, 50, helpers.MAT_FREQUENCY)
 
         fig = plt.figure('Explore V1 ' + file_name )
         ax1 = fig.add_subplot(221)
-        ax1.plot(time_array[::50] , data[::50])
+        ax1.plot(time_array[::50] , EOD[::50])
         ax1.set_title('Full data')
 
         ax2 = fig.add_subplot(222)
-        ax2.plot(time_array[0:675000] , data[0:675000]) # shows 5 cycles
-        ax2.axhline(threshold, color='r')
+        ax2.plot(time_array[0:675000] , EOD[0:675000]) # shows 5 cycles
+        ax2.axhline(-1.7, color='r')
         ax2.set_title('Waveform')
 
         ax3 = fig.add_subplot(223)
