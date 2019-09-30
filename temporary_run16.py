@@ -17,7 +17,7 @@ for fish in fish_names:
         data = data[np.isfinite(data)]
         EOD = data - np.mean(data)
         sampling_frequency = helpers.MAT_FREQUENCY
-        t_max = len(data) / helpers.MAT_FREQUENCY
+        t_max = len(raw_data) / helpers.MAT_FREQUENCY
         time_array = np.arange(0, t_max-1/sampling_frequency, 1 / sampling_frequency)  # IMPLEMENT IN HELPERS
         threshold = -max(EOD)/2 #-0.08
         f_estimate = calculate_frequency(EOD[::20], sampling_frequency/20, method='spectral')

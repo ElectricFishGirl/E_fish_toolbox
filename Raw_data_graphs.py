@@ -25,7 +25,6 @@ for fish in (fish_names):
         data = np.array(raw_data)
         data = data[np.isfinite(data)]
         EOD = data - np.mean(data)
-
         file_name = helpers.path_to_name(file)
         # sub_data = data[::sub]
         # sampling_frequency = helpers.MAT_FREQUENCY/sub
