@@ -35,6 +35,7 @@ for fish in fish_names:
         cycle_time = np.cumsum(1. / frequency)
 
         [xf, power] = helpers.compute_fft(EOD, 50, helpers.MAT_FREQUENCY)
+        fft_main = power.argmax()
 
         fig = plt.figure('Explore V1 ' + file_name )
         ax1 = fig.add_subplot(221)
@@ -48,7 +49,7 @@ for fish in fish_names:
 
         ax3 = fig.add_subplot(223)
         ax3.plot(xf,  power/np.max(power))
-        ax3.set_title('FFT')
+        ax3.set_title('FFT' + ' Fundamental at ' + str(fft_main) + 'HZ')
         ax3.set_ylabel('Amplitude')
         ax3.set_xlabel('Frequency ')
         ax3.set_xlim(0, 3000)

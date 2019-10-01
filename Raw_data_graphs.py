@@ -20,7 +20,7 @@ for fish in (fish_names):
     shift = 0
    # listy = [0,11,13,14,15]
    # listy = [3,17,18,1,2]
-    for file in mat_files[1:8]:
+    for file in mat_files[0:4]:
         raw_data = helpers.load_mat(file)
         data = np.array(raw_data)
         data = data[np.isfinite(data)]
