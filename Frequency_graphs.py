@@ -13,13 +13,11 @@ file_names = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #Analysis_filename = 'Analysis_t11.csv'
 
-fish = fish_names[16]
+fish = fish_names[0]
 for fish in fish_names:
-    j = 1
-    npy_files = helpers.get_high_frequency_files(fish, helpers.SAVE_PATH)
-    file = npy_files[j]
+    npy_files = helpers.get_npy_files(fish , helpers.SAVE_PATH, 'frequency')
+    fft_files = helpers.get_npy_files(fish , helpers.SAVE_PATH, 'fft')
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
-    raw_file = mat_files[j]
     for numb in range(1,3):
         raw_data = helpers.load_mat(mat_files[numb])
         data = np.array(raw_data)
@@ -34,7 +32,7 @@ for fish in fish_names:
         time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
         cycle_time = np.cumsum(1. / frequency)
 
-        [xf, power] = helpers.compute_fft(EOD, 50, helpers.MAT_FREQUENCY)
+        [xf, power] = helpers.load_npy(fft_files[numb])
         fft_main = power.argmax()
 
         fig = plt.figure('Explore V1 ' + file_name )

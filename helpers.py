@@ -24,8 +24,8 @@ def get_all_fish(path):
     return [split(x)[-1] for x in name_paths]
 
 
-def get_high_frequency_files(fish_name, path):
-    return glob(join(path, fish_name, "*.npy"))
+def get_npy_files(fish_name, path, analysis):
+    return glob(join(path, fish_name, analysis, "*.npy"))
 
 
 def get_mat_files(fish_name, path):
