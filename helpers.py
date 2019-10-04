@@ -18,6 +18,7 @@ NPY_FREQUENCY = 41666666.666
 LONG_FREQUENCY = 10416666.666
 MAT_FREQUENCY = 62500002.0
 
+
 def get_all_fish(path):
     name_paths = glob(join(path, "*"))
     return [split(x)[-1] for x in name_paths]
@@ -26,11 +27,14 @@ def get_all_fish(path):
 def get_high_frequency_files(fish_name, path):
     return glob(join(path, fish_name, "*.npy"))
 
+
 def get_mat_files(fish_name, path):
     return glob(join(path, fish_name, "*.mat"))
 
+
 def load_npy(path):
     return np.load(path)
+
 
 def load_mat(path):
     mat_file = sio.loadmat(path)
@@ -45,7 +49,7 @@ def create_time(file_length, style='NPY'):
     switcher = {
         'NPY': 1. / NPY_FREQUENCY,
         'LONG': 1. / LONG_FREQUENCY,
-        'MAT' : 1./ MAT_FREQUENCY
+        'MAT': 1. / MAT_FREQUENCY
     }
 
     dt = switcher[style]
@@ -66,11 +70,11 @@ def file_to_path(path):
     return split(path)[0]
 
 
-def save_results(frequencies, fish_name, file_name):
-    save_path = join(SAVE_PATH, fish_name)
+def save_results(results, fish_name, file_name, analysis):
+    save_path = join(SAVE_PATH, fish_name, analysis)
     __make_dir_if_not_exist__(save_path)
 
-    np.save(join(save_path, file_name), frequencies)
+    np.save(join(save_path, file_name), results)
 
 
 def save_figure(path, plot_type, fish_name, filename):
@@ -78,8 +82,7 @@ def save_figure(path, plot_type, fish_name, filename):
     __make_dir_if_not_exist__(save_path)
     plt.tight_layout()
     plt.savefig(join(path, plot_type + "_" + filename + ".jpg"), dpi=600)
-    #plt.close()
-
+    # plt.close()
 
 
 def load_manifest():
@@ -88,10 +91,12 @@ def load_manifest():
 
     return manifest
 
-def compute_fft(data, subsampling, samp_freq ):
+
+def compute_fft(data, subsampling, samp_freq):
     y = data[::subsampling]
     yf = fft(y)
     xf = np.linspace(0.0, 1.0 / (2.0 * (subsampling / samp_freq)), int(len(y) / 2))
     power = 2.0 / len(y) * np.abs(yf[0:len(y) // 2])
 
-    return  xf , power
+    return xf, power
+
