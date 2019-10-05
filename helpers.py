@@ -100,3 +100,9 @@ def compute_fft(data, subsampling, samp_freq):
 
     return xf, power
 
+def cleaning_data(raw_data):
+    data = np.array(raw_data)
+    data = data[np.isfinite(data)]
+    EOD = data - np.mean(data)
+
+    return EOD
