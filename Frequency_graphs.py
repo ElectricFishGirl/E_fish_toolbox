@@ -13,23 +13,25 @@ file_names = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #Analysis_filename = 'Analysis_t11.csv'
 
-fish = fish_names[0]
+fish = fish_names[17]
 for fish in fish_names:
-    npy_files = helpers.get_npy_files(fish , helpers.SAVE_PATH, 'frequency')
-    fft_files = helpers.get_npy_files(fish , helpers.SAVE_PATH, 'fft')
+    npy_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'frequency')
+    fft_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'fft')
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
-    for numb in range(1,3):
+    for numb in range(len(npy_files)+1):
         raw_data = helpers.load_mat(mat_files[numb])
         data = np.array(raw_data)
         data = data[np.isfinite(data)]
         EOD = data - np.mean(data)
         file_name = helpers.path_to_name(mat_files[numb])
-        frequency = helpers.load_npy(npy_files[numb])
-        cv = '{:.2e}'.format(np.std(frequency) / np.mean(frequency))
-        threshold = max(EOD) / 2
+        [frequency, cv, threshold] = helpers.load_npy(npy_files[numb])
+        #frequency = frequency_info[0]
+       # cv = frequency_info[1]
+        #threshold = frequency_info[2]
 
-        t_max = len(raw_data) / helpers.MAT_FREQUENCY
-        time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
+       # t_max = len(raw_data) / helpers.MAT_FREQUENCY
+        #time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
+        time_array = helpers.create_time(len(raw_data)-1, style='MAT')
         cycle_time = np.cumsum(1. / frequency)
 
         [xf, power] = helpers.load_npy(fft_files[numb])
@@ -59,20 +61,17 @@ for fish in fish_names:
         helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1.1 for ', fish,  file_name)
         plt.close()
 
-        for numb in range(1, 8):
+        for numb in range(len(npy_files)+1):
 
             file_name = helpers.path_to_name(mat_files[numb])
-            frequency = helpers.load_npy(npy_files[numb])
-            cv = '{:.2e}'.format(np.std(frequency) / np.mean(frequency))
+            [frequency, cv, threshold] = helpers.load_npy(npy_files[numb])
 
-            t_max = len(raw_data) / helpers.MAT_FREQUENCY
-            time_array = np.arange(0, t_max - 1 / helpers.MAT_FREQUENCY, 1 / helpers.MAT_FREQUENCY)  #
+            time_array = helpers.create_time(len(raw_data) - 1, style='MAT')
             cycle_time = np.cumsum(1. / frequency)
-
 
             fig = plt.figure('Analysis V1 ' + file_name)
             ax1 = fig.add_subplot(221)
-            ax1.hist(frequency, bins = 60)
+            ax1.hist(frequency, bins = 40)
             ax1.set_title('Histogram')
 
             ax2 = fig.add_subplot(222)

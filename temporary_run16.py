@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
-fish = fish_names[0]
+fish = fish_names[1]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[13]
-    for file in mat_files[3:7]:
-
+    file = mat_files[2]
+    for file in mat_files:
+        print(file)
         raw_data = helpers.load_mat(file)
         signal_length = len(raw_data)
         EOD = helpers.cleaning_data(raw_data)
@@ -34,9 +34,10 @@ for fish in fish_names:
         print(cv)
         print(np.mean(frequencies))
 
-        #Saving the results
         file_name = helpers.path_to_name(file)
-        helpers.save_results(frequencies, fish, file_name, 'frequency')
+
+        frequency_info = [frequencies, cv, threshold]
+        helpers.save_results(frequency_info, fish, file_name, 'frequency')
 
         fft = [xf, power]
         helpers.save_results(fft, fish, file_name + '_fft', 'fft')
