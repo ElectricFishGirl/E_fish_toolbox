@@ -1,10 +1,10 @@
 import helpers
 from lewisfunctions.frequency import calculate_frequency
+from scipy.signal import correlate
 #from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
-
-
+import parabolic
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
 fish = fish_names[2]
@@ -23,8 +23,17 @@ for fish in fish_names:
         time = helpers.create_time(signal_length-1, style='MAT')
 
         threshold = max(EOD)/2 #-0.08
-        [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
-        f_estimate = 1.2*power.argmax()
+        [xf, power] = helpers.compute_fft(EOD[0:6250000], 60, sampling_frequency)
+        f_estimate = 1.*power.argmax()
+
+        corr = correlate(EOD[0:6250000], EOD[0:6250000], mode='full')
+        corr = corr[len(corr) // 2:]
+
+        d = np.diff(corr)
+        start = np.nonzero(d > 0)[0][0]
+        peak = np.argmax(corr[start:]) + start
+
+        f_estimate = sampling_frequency / px
 
         #f_estimate = calculate_frequency(EOD[::20], sampling_frequency/20, method='spectral')
 
