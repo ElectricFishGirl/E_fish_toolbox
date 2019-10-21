@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
-fish = fish_names[1]
+fish = fish_names[2]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[2]
+    file = mat_files[8]
     for file in mat_files:
         print(file)
         raw_data = helpers.load_mat(file)
@@ -24,12 +24,12 @@ for fish in fish_names:
 
         threshold = max(EOD)/2 #-0.08
         [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
-        f_estimate = 1.35*power.argmax()
+        f_estimate = 1.2*power.argmax()
 
         #f_estimate = calculate_frequency(EOD[::20], sampling_frequency/20, method='spectral')
 
         frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
-                                          crossing_threshold=threshold, method='median', ascending=True)
+                                          crossing_threshold=threshold, temporal_threshold= 0.05, method='median', ascending=True)
         cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
         print(cv)
         print(np.mean(frequencies))

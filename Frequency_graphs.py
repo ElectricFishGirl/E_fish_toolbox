@@ -61,7 +61,7 @@ for fish in fish_names:
         helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Explore V1.1 for ', fish,  file_name)
         plt.close()
 
-        for numb in range(len(npy_files)+1):
+        for numb in range(len(npy_files)):
 
             file_name = helpers.path_to_name(mat_files[numb])
             [frequency, cv, threshold] = helpers.load_npy(npy_files[numb])
