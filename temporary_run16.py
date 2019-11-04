@@ -7,33 +7,33 @@ import matplotlib.pyplot as plt
 import parabolic
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 indexes = []
-fish = fish_names[2]
+fish = fish_names[6]
 for fish in fish_names:
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-    file = mat_files[8]
-    for file in mat_files:
+    file = mat_files[19]
+    for file in mat_files[1:19]:
         print(file)
         raw_data = helpers.load_mat(file)
         signal_length = len(raw_data)
         EOD = helpers.cleaning_data(raw_data)
 
         sampling_frequency = helpers.MAT_FREQUENCY
-        #t_max = signal_length / helpers.MAT_FREQUENCY
-        #time_array = np.arange(0, t_max-1/sampling_frequency, 1 / sampling_frequency)  # IMPLEMENT IN HELPERS
+       # t_max = signal_length / 500000
+       # time_array = np.arange(0, t_max-1/500000, 1 / 500000)  # IMPLEMENT IN HELPERS
         time = helpers.create_time(signal_length-1, style='MAT')
 
         threshold = max(EOD)/2 #-0.08
-        [xf, power] = helpers.compute_fft(EOD[0:6250000], 60, sampling_frequency)
+        [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
         f_estimate = 1.*power.argmax()
 
-        corr = correlate(EOD[0:6250000], EOD[0:6250000], mode='full')
-        corr = corr[len(corr) // 2:]
+        #corr = correlate(EOD[0:6250000], EOD[0:62500000], mode='full')
+        #corr = corr[len(corr) // 2:]
 
-        d = np.diff(corr)
-        start = np.nonzero(d > 0)[0][0]
-        peak = np.argmax(corr[start:]) + start
+       # d = np.diff(corr)
+       # start = np.nonzero(d > 0)[0][0]
+        #peak = np.argmax(corr[start:]) + start
 
-        f_estimate = sampling_frequency / px
+       # f_estimate = sampling_frequency / px
 
         #f_estimate = calculate_frequency(EOD[::20], sampling_frequency/20, method='spectral')
 

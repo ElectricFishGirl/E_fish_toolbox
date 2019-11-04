@@ -18,7 +18,7 @@ for fish in fish_names:
     npy_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'frequency')
     fft_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'fft')
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
-    for numb in range(len(npy_files)+1):
+    for numb in range(len(npy_files)+1-1):
         raw_data = helpers.load_mat(mat_files[numb])
         data = np.array(raw_data)
         data = data[np.isfinite(data)]
@@ -39,7 +39,7 @@ for fish in fish_names:
 
         fig = plt.figure('Explore V1 ' + file_name )
         ax1 = fig.add_subplot(221)
-        ax1.plot(time_array[::50] , EOD[::50])
+        ax1.plot(time_array[::50] , EOD[1::50])
         ax1.set_title('Full data')
 
         ax2 = fig.add_subplot(222)
