@@ -22,4 +22,7 @@ for fish in (fish_names):
             [xf, power] = helpers.compute_fft(sub_EOD, 1, sampling_frequency)
             file_name = helpers.path_to_name(file)
             fft = [xf, power]
-            helpers.save_results(fft, fish, file_name + '_fft_' + str(i), 'fft')
+            helpers.save_results(fft, fish, file_name + '_fft_' + '{0:03}'.format(i), 'fft')
+
+         #   asdf  = ["a_1", "b_2", "c_10"]
+         #   asdf.sort(key=lambda x: int(x.split("_")[-1]))

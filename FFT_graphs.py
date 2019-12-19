@@ -19,9 +19,9 @@ for fish in (fish_names):
     fft_files = helpers.get_npy_files(fish , helpers.SAVE_PATH, 'fft')
     file = mat_files[3]
     shift = 0
-    for numb in range(15,19):
+    for numb in range(29,31):
         print(numb)
-        file = mat_files[numb]
+        file = mat_files[19]
         file_name = helpers.path_to_name(file)
         [xf, power] = helpers.load_npy(fft_files[numb])
         plt.plot(xf, shift+power/np.max(power))
@@ -31,7 +31,7 @@ for fish in (fish_names):
         plt.xlabel('Frequency ')
         plt.xlim(0,6000)
         plt.title('FFT ' + file_name )
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'FFT 3', fish, file_name)
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'FFT sub 3', fish, file_name)
     plt.close()
 
 
