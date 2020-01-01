@@ -71,9 +71,10 @@ def file_to_path(path):
 
 
 def save_results(results, fish_name, file_name, analysis):
+    fish_path = join(SAVE_PATH, fish_name)
+    __make_dir_if_not_exist__(fish_path)
     save_path = join(SAVE_PATH, fish_name, analysis)
     __make_dir_if_not_exist__(save_path)
-
     np.save(join(save_path, file_name), results)
 
 
