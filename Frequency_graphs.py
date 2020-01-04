@@ -1,24 +1,32 @@
 import helpers
-#from tqdm import tqdm
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import pandas as pd
 from os.path import join
-from scipy.fftpack import fft
 
 CVs = []
 average_frequencies = []
 file_names = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-#Analysis_filename = 'Analysis_t11.csv'
-
 fish = fish_names[17]
+
+lowrez = False
+frequencies = []
+
+highrez_index = [0, 1, 2, 3, 7, 8, 9, 12, 13, 14, 17, 18, 19, 22, 23]
+lowrez_index = [4, 5, 6, 10, 11, 15, 16, 20, 21]
+if lowrez is True:
+    file_number = lowrez_index
+else:
+file_number = highrez_index
+
 for fish in fish_names:
     npy_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'frequency')
     fft_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'fft')
     mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
-    for numb in range(len(npy_files)+1-1):
+    for numb in file_number:
+        index = file_number.index(numb)
         raw_data = helpers.load_mat(mat_files[numb])
         data = np.array(raw_data)
         data = data[np.isfinite(data)]
@@ -34,7 +42,7 @@ for fish in fish_names:
         time_array = helpers.create_time(len(raw_data)-1, style='MAT')
         cycle_time = np.cumsum(1. / frequency)
 
-        [xf, power] = helpers.load_npy(fft_files[numb])
+        [xf, power] = helpers.load_npy(fft_files[index])
         fft_main = power.argmax()
 
         fig = plt.figure('Explore V1 ' + file_name )
