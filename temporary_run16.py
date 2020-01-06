@@ -2,7 +2,7 @@ import helpers
 from lewisfunctions.frequency import calculate_frequency
 import numpy as np
 import os
-
+import matplotlib.pyplot as plt
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
 fish = fish_names[1]
 highrez = []
@@ -15,7 +15,7 @@ for files in mat_files:
     else:
         highrez.append(mat_files.index(files))
 
-#file = mat_files[0]
+file = mat_files[0]
 for index in highrez:
     file = mat_files[index]
     print(file)
@@ -23,10 +23,7 @@ for index in highrez:
     signal_length = len(raw_data)
     EOD = helpers.cleaning_data(raw_data)
     sampling_frequency =helpers.MAT_FREQUENCY#500000  #
-   # t_max = signal_length / 500000
-   # time_array = np.arange(0, t_max-1/500000, 1 / 500000)  # IMPLEMENT IN HELPERS
     time = helpers.create_time(signal_length-1, style='MAT')
-
     threshold = np.max(EOD)/2 #-0.08
 
     [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
@@ -34,10 +31,11 @@ for index in highrez:
 
 
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
-                                      crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=False)
+                                      crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=True)
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
+    plt.plot(frequencies, '.')
 
     file_name = helpers.path_to_name(file)
 
@@ -56,10 +54,13 @@ for index in lowrez:
     threshold = np.max(EOD)/2
     f_estimate = 800
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
-                                      crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=False)
+                                      crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=True)
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
+    plt.plot(frequencies, '.')
+
+
     file_name = helpers.path_to_name(file)
     frequency_info = [frequencies, cv, threshold]
     helpers.save_results(frequency_info, fish, file_name, 'frequency')

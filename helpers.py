@@ -107,3 +107,14 @@ def cleaning_data(raw_data):
     EOD = data - np.mean(data)
 
     return EOD
+
+def sort_files(mat_files):
+    highrez = []
+    lowrez = []
+    for files in mat_files:
+        b = os.path.getsize(files)
+        if b > 125000383:
+            lowrez.append(mat_files.index(files))
+        else:
+            highrez.append(mat_files.index(files))
+    return lowrez, highrez

@@ -6,10 +6,14 @@ from os.path import join
 lowrez = True
 frequencies =[]
 marker_ind = []
+lowrez_index = []
+highrez_index = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 fish = fish_names[4]
-highrez_index = [0, 1, 2, 3, 7, 8, 9, 12, 13, 14, 17, 18, 19, 22, 23]
-lowrez_index = [4, 5, 6, 10, 11, 15, 16, 20, 21]
+
+mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
+[lowrez_index ,highrez_index ] = helpers.sort_files(mat_files)
+
 if lowrez is True:
     file_number = lowrez_index
 else:
