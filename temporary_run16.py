@@ -4,7 +4,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
-fish = fish_names[1]
+fish = fish_names[8]
 highrez = []
 lowrez = []
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
@@ -58,7 +58,7 @@ for index in lowrez:
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
-    plt.plot(frequencies, '.')
+    #plt.plot(frequencies, '.')
 
 
     file_name = helpers.path_to_name(file)
