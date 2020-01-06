@@ -9,7 +9,7 @@ marker_ind = []
 lowrez_index = []
 highrez_index = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-fish = fish_names[4]
+fish = fish_names[5]
 
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
 [lowrez_index ,highrez_index ] = helpers.sort_files(mat_files)
