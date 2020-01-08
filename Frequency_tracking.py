@@ -9,7 +9,8 @@ marker_ind = []
 lowrez_index = []
 highrez_index = []
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-fish = fish_names[5]
+#fish_names.index('grinch')
+fish = fish_names[17]
 
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
 [lowrez_index ,highrez_index ] = helpers.sort_files(mat_files)
@@ -31,6 +32,14 @@ for index in file_number:
     plt.title('Frequency variation in time for ' + file_name + ' CV = ' + str(cv))
     helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Frequency in time for ', fish, file_name)
     plt.close()
+    if lowrez is False:
+        plt.figure('Histogram of frequency')
+        plt.hist(frequency, bins = 35)
+        plt.xlabel('Frequency [Hz]')
+        plt.ylabel('Occurrence')
+        plt.title('Histogram of frequency' + file_name + ' CV = ' + str(cv))
+        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Histogram of frequency', fish, file_name)
+        plt.close()
     if lowrez is True:
         frequencies = np.append(frequencies, frequency)
         marker_ind = np.append(marker_ind, len(frequency))

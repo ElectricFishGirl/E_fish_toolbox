@@ -1,14 +1,7 @@
-import scipy.io as sio
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.fftpack import fft
 import helpers
 from os.path import join
-
-#from tqdm import tqdm
-import csv
-import pandas as pd
-import os
 
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16) # CHANGE TO RECORDING_PATH8 for 8 bits files
 indexes = []
