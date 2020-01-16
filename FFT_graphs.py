@@ -6,8 +6,8 @@ from os.path import join
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16) # CHANGE TO RECORDING_PATH8 for 8 bits files
 indexes = []
 fish = fish_names[1]
-levels = 3
 
+levels = 3
 mat_files = np.array(helpers.get_mat_files(fish, helpers.RECORDING_PATH16))
 fft_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'fft')
 counter = 0
@@ -15,7 +15,7 @@ shift = 0
 set = 1
 
 for ind in range(len(fft_files)):
-    if counter <= 3:
+    if counter <= levels:
         counter += 1
         file_name = helpers.path_to_name(fft_files[0])
         xf, power = helpers.load_npy(fft_files[0])
@@ -23,7 +23,7 @@ for ind in range(len(fft_files)):
         shift = shift + 1.2
         fft_files.pop(0)
 
-    if counter == 3:
+    if counter == levels:
         shift = 0
         counter = 0
         plt.title('FFT ' + fish + str(set))
@@ -35,8 +35,7 @@ for ind in range(len(fft_files)):
         plt.close()
         set += 1
 
-    elif ((len(fft_files) == 0) and counter == 2) or ((len(fft_files) == 0) and counter == 1):
-        print('Here?')
+    elif ((len(fft_files) == 0) and counter <levels) :
         plt.ylabel('Amplitude')
         plt.xlabel('Frequency ')
         plt.grid()
