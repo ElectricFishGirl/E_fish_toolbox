@@ -8,12 +8,7 @@ fish = fish_names[8]
 highrez = []
 lowrez = []
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
-for files in mat_files:
-    b = os.path.getsize(files)
-    if b > 125000383:
-        lowrez.append(mat_files.index(files))
-    else:
-        highrez.append(mat_files.index(files))
+[lowrez,highrez ] = helpers.sort_files(mat_files)
 
 file = mat_files[0]
 for index in highrez:
@@ -22,13 +17,12 @@ for index in highrez:
     raw_data = helpers.load_mat(file)
     signal_length = len(raw_data)
     EOD = helpers.cleaning_data(raw_data)
-    sampling_frequency =helpers.MAT_FREQUENCY#500000  #
+    sampling_frequency = helpers.MAT_FREQUENCY
     time = helpers.create_time(signal_length-1, style='MAT')
-    threshold = np.max(EOD)/2 #-0.08
+    threshold = np.max(EOD)/2
 
     [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
     f_estimate = 1.*power.argmax()
-
 
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
                                       crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=True)
@@ -50,16 +44,16 @@ for index in lowrez:
     raw_data = helpers.load_mat(file)
     signal_length = len(raw_data)
     EOD = helpers.cleaning_data(raw_data)
-    sampling_frequency =500000
+    sampling_frequency = 500000
     threshold = np.max(EOD)/2
     f_estimate = 800
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
-                                      crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=True)
+                                      crossing_threshold=threshold, temporal_threshold=0.05,
+                                      method='median', ascending=True)
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
     #plt.plot(frequencies, '.')
-
 
     file_name = helpers.path_to_name(file)
     frequency_info = [frequencies, cv, threshold]

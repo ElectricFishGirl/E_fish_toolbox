@@ -30,7 +30,7 @@ for index in file_number:
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [s]')
     plt.title('Frequency variation in time for ' + file_name + ' CV = ' + str(cv))
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Frequency in time for ', fish, file_name)
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Frequency in time for ', fish, file_name, 'Frequency_graphs')
     plt.close()
     if lowrez is False:
         plt.figure('Histogram of frequency')
@@ -38,7 +38,7 @@ for index in file_number:
         plt.xlabel('Frequency [Hz]')
         plt.ylabel('Occurrence')
         plt.title('Histogram of frequency' + file_name + ' CV = ' + str(cv))
-        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Histogram of frequency', fish, file_name)
+        helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Histogram of frequency', fish, file_name, 'Histograms')
         plt.close()
     if lowrez is True:
         frequencies = np.append(frequencies, frequency)
@@ -56,7 +56,7 @@ if lowrez is True :
         plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')
     for xc in marker_index[:-1:2]:
             plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif frequency in time for ', fish, file_name)
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif frequency in time for ', fish, file_name, 'Frequency_graphs')
     plt.close()
 
 
