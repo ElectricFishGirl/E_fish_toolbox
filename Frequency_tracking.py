@@ -3,14 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
 
+fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
+#fish_names.index('grinch')
+fish = fish_names[17]
+
 lowrez = False
 frequencies =[]
 marker_ind = []
 lowrez_index = []
 highrez_index = []
-fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-#fish_names.index('grinch')
-fish = fish_names[17]
+
 
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
 [lowrez_index ,highrez_index ] = helpers.sort_files(mat_files)
