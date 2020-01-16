@@ -22,7 +22,7 @@ for index in highrez:
     threshold = np.max(EOD)/2
 
     [xf, power] = helpers.compute_fft(EOD, 60, sampling_frequency)
-    f_estimate = 1.*power.argmax()
+    f_estimate = 2.*power.argmax()
 
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
                                       crossing_threshold=threshold, temporal_threshold= 0.05,  method='median', ascending=True)

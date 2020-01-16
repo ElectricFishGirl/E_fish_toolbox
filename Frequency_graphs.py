@@ -20,10 +20,7 @@ for fish in fish_names:
     fft_files = helpers.get_npy_files(fish, helpers.SAVE_PATH, 'fft')
     mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
     [lowrez_index, highrez_index] = helpers.sort_files(mat_files)
-    if lowrez is True:
-        file_number = lowrez_index
-    else:
-        file_number = highrez_index
+    file_number = highrez_index
 
     for numb in file_number:
         index = file_number.index(numb)
@@ -38,7 +35,7 @@ for fish in fish_names:
         cycle_time = np.cumsum(1. / frequency)
 
         [xf, power] = helpers.load_npy(fft_files[index])
-        fft_main = power.argmax()
+        fft_main = 2*power.argmax()
 
         fig = plt.figure('Explore V1 ' + file_name )
         ax1 = fig.add_subplot(221)

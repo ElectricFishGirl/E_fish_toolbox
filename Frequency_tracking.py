@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from os.path import join
 
-lowrez = True
+lowrez = False
 frequencies =[]
 marker_ind = []
 lowrez_index = []
