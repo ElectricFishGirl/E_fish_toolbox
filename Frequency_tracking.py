@@ -5,9 +5,8 @@ from os.path import join
 
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #fish_names.index('grinch')
-fish = fish_names[17]
-
-lowrez = False
+fish = fish_names[3]
+lowrez = True
 frequencies =[]
 marker_ind = []
 lowrez_index = []
@@ -53,6 +52,7 @@ if lowrez is True :
     plt.plot(sum_cycle_time, frequencies, '.')
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [s]')
+    plt.ylim([180,500])
     plt.title('Frequency variation in time for ' + fish )
     for xc in marker_index[:-1]:
         plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')

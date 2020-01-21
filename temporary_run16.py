@@ -4,13 +4,13 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 fish_names = helpers.get_all_fish(helpers.RECORDING_PATH16)
-fish = fish_names[8]
+fish = fish_names[3]
 highrez = []
 lowrez = []
 mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
 [lowrez,highrez ] = helpers.sort_files(mat_files)
 
-file = mat_files[0]
+file = mat_files[1]
 for index in highrez:
     file = mat_files[index]
     print(file)
@@ -29,7 +29,6 @@ for index in highrez:
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
-    plt.plot(frequencies, '.')
 
     file_name = helpers.path_to_name(file)
 
@@ -46,14 +45,13 @@ for index in lowrez:
     EOD = helpers.cleaning_data(raw_data)
     sampling_frequency = 500000
     threshold = np.max(EOD)/2
-    f_estimate = 800
+    f_estimate = 500
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
                                       crossing_threshold=threshold, temporal_threshold=0.05,
                                       method='median', ascending=True)
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
-    #plt.plot(frequencies, '.')
 
     file_name = helpers.path_to_name(file)
     frequency_info = [frequencies, cv, threshold]
