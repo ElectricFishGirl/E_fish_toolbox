@@ -29,7 +29,7 @@ for numb in file_number:
     data = data[np.isfinite(data)]
     EOD = data - np.mean(data)
     file_name = helpers.path_to_name(mat_files[numb])
-    [frequency, cv, threshold] = helpers.load_npy(npy_files[numb])
+    [frequency, cv, threshold] = helpers.load_npy(npy_files[index])
 
     time_array = helpers.create_time(len(raw_data)-1, style='MAT')
     cycle_time = np.cumsum(1. / frequency)
