@@ -6,7 +6,7 @@ from os.path import join
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #fish_names.index('grinch')
 fish = fish_names[3]
-lowrez = True
+lowrez = False
 frequencies =[]
 marker_ind = []
 lowrez_index = []
@@ -33,6 +33,7 @@ for index in file_number:
     plt.title('Frequency variation in time for ' + file_name + ' CV = ' + str(cv))
     helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Frequency in time for ', fish, file_name, 'Frequency_graphs')
     plt.close()
+
     if lowrez is False:
         plt.figure('Histogram of frequency')
         plt.hist(frequency, bins = 35)
@@ -52,13 +53,25 @@ if lowrez is True :
     plt.plot(sum_cycle_time, frequencies, '.')
     plt.ylabel('Frequency [Hz]')
     plt.xlabel('Time [s]')
-    plt.ylim([180,500])
     plt.title('Frequency variation in time for ' + fish )
     for xc in marker_index[:-1]:
         plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')
     for xc in marker_index[:-1:2]:
             plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
     helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif frequency in time for ', fish, file_name, 'Frequency_graphs')
+    plt.close()
+    sum_cycle_time = np.cumsum(1. / frequencies)
+    plt.figure('Period with time')
+    plt.plot(sum_cycle_time, (1./frequencies)*1e3, '.')
+    plt.ylabel('Period[ms]')
+    plt.xlabel('Time [s]')
+    plt.title('Period variation in time for ' + fish)
+    for xc in marker_index[:-1]:
+        plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')
+    for xc in marker_index[:-1:2]:
+        plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif Period in time for ', fish, file_name,
+                        'Frequency_graphs')
     plt.close()
 
 
