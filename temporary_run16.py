@@ -46,17 +46,17 @@ for index in lowrez:
     EOD = helpers.cleaning_data(raw_data)
     sampling_frequency = 500000
     threshold = np.max(EOD)/3
-    f_estimate = 500
+    f_estimate = 800
     frequencies = calculate_frequency(EOD, sampling_frequency, estimated_frequency=f_estimate,
                                      crossing_threshold=threshold, temporal_threshold=0.05,
                                      method='median', ascending=True)
     cv = '{:.2e}'.format(np.std(frequencies) / np.mean(frequencies))
     print(cv)
     print(np.mean(frequencies))
-    [xf, power] = helpers.compute_fft(EOD[len(EOD)//2:len(EOD)//2+len(EOD)//100], 1, sampling_frequency)
+    #[xf, power] = helpers.compute_fft(EOD[len(EOD)//2:len(EOD)//2+len(EOD)//100], 1, sampling_frequency)
 
     file_name = helpers.path_to_name(file)
     frequency_info = [frequencies, cv, threshold]
     helpers.save_results(frequency_info, fish, file_name, 'frequency')
-    fft = [xf, power]
-    helpers.save_results(fft, fish, file_name + '_fft', 'fft')
+    #fft = [xf, power]
+    #helpers.save_results(fft, fish, file_name + '_fft', 'fft')

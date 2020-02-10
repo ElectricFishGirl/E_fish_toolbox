@@ -6,7 +6,7 @@ from os.path import join
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
 #fish_names.index('grinch')
 fish = fish_names[3]
-lowrez = False
+lowrez = True
 frequencies =[]
 marker_ind = []
 lowrez_index = []
@@ -58,19 +58,22 @@ if lowrez is True :
         plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')
     for xc in marker_index[:-1:2]:
             plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif frequency in time for ', fish, file_name, 'Frequency_graphs')
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulative frequency in time for ', fish, file_name, 'Frequency_graphs')
     plt.close()
     sum_cycle_time = np.cumsum(1. / frequencies)
     plt.figure('Period with time')
     plt.plot(sum_cycle_time, (1./frequencies)*1e3, '.')
-    plt.ylabel('Period[ms]')
+    plt.ylabel('Period [ms]')
     plt.xlabel('Time [s]')
-    plt.title('Period variation in time for ' + fish)
+    plt.title('Period variation over time ')
     for xc in marker_index[:-1]:
-        plt.axvline(x=sum_cycle_time[int(xc)], color='k', linestyle='--')
+        plt.axvline(x=sum_cycle_time[int(xc)], color='silver', linestyle='-')
     for xc in marker_index[:-1:2]:
         plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
-    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulatif Period in time for ', fish, file_name,
+    xc =  marker_index[0]
+    plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--', label='Dose administered')
+    legend = plt.legend(loc='lower right', shadow=True)
+    helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulative Period in time for ', fish, file_name,
                         'Frequency_graphs')
     plt.close()
 
