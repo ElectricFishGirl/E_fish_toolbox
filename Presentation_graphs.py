@@ -21,7 +21,7 @@ mat_files = helpers.get_mat_files(fish, helpers.RECORDING_PATH16)
 [lowrez_index, highrez_index] = helpers.sort_files(mat_files)
 file_number = highrez_index
 
-numb = 1
+numb = 12
 index = file_number.index(numb)
 raw_data = helpers.load_mat(mat_files[numb])
 data = np.array(raw_data)
@@ -59,16 +59,16 @@ plt.xlim(0, 3000)
 
 fig4 = plt.figure('Period in time' + file_name)
 plt.plot(cycle_time, (1./frequency)*1e3, '.')
-plt.title('Period with time ; ' + ' CV = ' + str(cv))
+plt.title('Period with time')
 plt.ylabel('Period [ms]')
 plt.xlabel('Time [s] ')
 
 fig5 = plt.figure('Autocorrelation' + file_name)
-plt.acorr((1./frequency)*1e3, usevlines=True, maxlags=10, normed=True, lw=2)
+period = (1./frequency)*1e3
+plt.acorr(period-period.mean(), usevlines=True, maxlags=10, normed=True, lw=2)
 plt.grid(True)
 plt.axhline(0, color='black', lw=2)
 plt.title('Auto-Correlation')
-
 
 fig = plt.figure('Drugs' + file_name)
 ax1 = fig.add_subplot(221)
