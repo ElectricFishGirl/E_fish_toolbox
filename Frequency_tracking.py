@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from os.path import join
 
 fish_names = helpers.get_all_fish(helpers.SAVE_PATH)
-#fish_names.index('grinch')
-fish = fish_names[3]
+fish_names.index('Moush')
+fish = fish_names[11]
 lowrez = True
 frequencies =[]
 marker_ind = []
@@ -61,13 +61,13 @@ if lowrez is True :
     helpers.save_figure(join(helpers.SAVE_PATH, fish), 'Cumulative frequency in time for ', fish, file_name, 'Frequency_graphs')
     plt.close()
     sum_cycle_time = np.cumsum(1. / frequencies)
+
     plt.figure('Period with time')
-    plt.plot(sum_cycle_time, (1./frequencies)*1e3, '.')
+    plt.plot(sum_cycle_time[::1200], (1./frequencies[::1200])*1e3, '.',markersize = 30, alpha = 0.2)
     plt.ylabel('Period [ms]')
     plt.xlabel('Time [s]')
-    plt.title('Period variation over time ')
-    for xc in marker_index[:-1]:
-        plt.axvline(x=sum_cycle_time[int(xc)], color='silver', linestyle='-')
+    #for xc in marker_index[:-1]:
+    #    plt.axvline(x=sum_cycle_time[int(xc)], color='silver', linestyle='-')
     for xc in marker_index[:-1:2]:
         plt.axvline(x=sum_cycle_time[int(xc)], color='r', linestyle='--')
     xc =  marker_index[0]
